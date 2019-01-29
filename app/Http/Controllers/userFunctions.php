@@ -64,7 +64,7 @@ class userFunctions extends Controller
     }
 
     //  USER LOGOUT
-    public function userLogout(Request $request)
+    public function Logout(Request $request)
     {
         $request->session()->forget('loggedUserName');
         return redirect('/userLogin');
@@ -72,7 +72,7 @@ class userFunctions extends Controller
 
     public function userdatafetch(Request $request){
         //TO GET USER DATA
-        $uname =session()->get('loggedUserName');
+        $uname = session()->get('loggedUserName');
         $userData = DB::table('tbl_users')->where(['userUsername'=>$uname])->get();
 
         //TO GET ITEMS
@@ -109,5 +109,30 @@ class userFunctions extends Controller
         $itemsDB = DB::table('tbl_items')->join('tbl_subcategory','tbl_subcategory.subcatId','=','tbl_items.subcatId')->join('tbl_category','tbl_category.catId','=','tbl_subcategory.catId')->where('itemId','=',$itemid)->get();
 
         return view('itemView', ['userData'=>$userData,'itemsDB'=>$itemsDB]);
+    }
+    
+    public function userCheck(Request $request)
+    {
+        $uname = $request->username;
+
+        //TO GET ITEM DATA
+        $checkLogin = DB::table('tbl_users')->where(['userUsername'=>$uname])->get();
+        if(count($checkLogin)  >0)
+        {
+            $userExists=true;
+        }
+        else
+        {
+            $userExists=false;
+        }
+        return view('/user/userForgetPass',['userExists'=>$userExists,'userName'=>$uname]);
+    }
+
+    public function changeUserPassword(Request $request)
+    {
+        $uname = $request->hidUserName;
+        $password = $request->p1;
+        DB::table('tbl_users')->where(['userUsername'=>$uname])->update(['userPassword'=>$password]);
+        return redirect('/userHome');
     }
 }

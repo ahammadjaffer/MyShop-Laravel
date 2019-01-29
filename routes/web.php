@@ -129,6 +129,7 @@ Route::get('/userLogin', function () {
     return view('userLogin');
 });
 Route::POST('/userLoginCheck', 'userFunctions@userLoginCheck');
+Route::get('/userLogout', 'userFunctions@Logout');
 
 //DROPDOWN
 Route::get('/dropdown', function () {
@@ -153,7 +154,7 @@ Route::get('/hover', function(){
 
 
 Route::get('/userAccount', function(){
-    return view('userAccount');
+    return view('uesrAccount');
 });
 Route::get('/userAccount', 'userFunctions@accountDataFetch');
 
@@ -161,3 +162,5 @@ Route::get('/userAccount', 'userFunctions@accountDataFetch');
 Route::get('/userForgetPass', function(){
     return view('user/userForgetPass');
 });
+Route::post('/CheckUserExists', 'userFunctions@userCheck');
+Route::post('/changeUserPassword', 'userFunctions@changeUserPassword');
