@@ -54,24 +54,22 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-      <td>@mdo</td>
-    </tr>
+    <?php
+      if(isset($usersDB))
+      {
+        foreach($usersDB as $user)
+        {
+          ?>
+            <tr>
+              <td><img src="/uploads/<?php echo $user->userImage; ?>" width="35px"height="35px" alt="<?php echo $user->userImage; ?>"></td>
+              <td><?php echo $user->userFullname; ?></td>
+              <td><?php echo $user->userContact; ?></td>
+              <td><?php echo $user->placeName; ?></td>
+            </tr>
+          <?php
+        }
+      }
+    ?>
   </tbody>
 </table>
 

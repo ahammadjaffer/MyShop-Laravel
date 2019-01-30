@@ -8,8 +8,10 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Kosugi+Maru" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Thambi" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lato|Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <script src = "/js/jquery.js"></script>
     <style>
     body {
@@ -32,46 +34,52 @@
         border-radius:50%;
         overflow:hidden;
     }
-    aside{
-        width:25%;
-        height:550px;
-        border-radius:15px;
-        margin:15px;
-        background:#f2f2f2;
-    }
-    aside{
-      float:left;
-    }
-    .main{
-      float:left;
-      position:relative;
-      margin:auto;
-      margin:15px;
-      width:70%;
-    }
     .clearBoth{
       clear: both;;
     }
-    .card{
-      font-family: 'Montserrat', sans-serif;
-      font-size:15px;
-      width:30%;
-      height:300px;
-      float:left;
-      border:none;
+    .name{
+      font-size:55px;
+      font-family: 'Kosugi Maru', sans-serif;
     }
-    .card:hover{
-      background:#f2f2f2;
-      transform:scale(1.01, 1.01);
-      z-index:11;
-      border-radius:5px;
-      box-shadow:0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    .details{
+      font-size:20px;
+      font-family: 'Kosugi Maru', sans-serif;
+    }
+    .aside{
+      float:left;
+      margin:25px;
+    }
+    .maindetails{
+      float:left;
+      margin:25px 35px;
     }
     .my{
 		color:#CCD700;
     }
     .shop{
       color:#0099A5;
+    }
+    .chpr{
+      margin:10px 20%;
+      display:block;
+    }
+    .mainContent{
+      float:left;
+    }
+    .menuGroup{
+      float:right;
+      margin:150px 0;
+    }
+    .bgr{
+      width:250px;
+      margin:3px 0;
+    }
+    .ico{
+      width:35px;
+      height:35px;
+      margin:25px;
+    }
+    .ico:hover{
     }
     </style>
 </head>
@@ -93,17 +101,13 @@
           Menu
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/userLogout">Logout</a>
+          <a class="dropdown-item" href="#">Action</a>
           <a class="dropdown-item" href="#">Another action</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/#">Another action 2</a>
+          <a class="dropdown-item" href="#">Something else here</a>
         </div>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search Items" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
     
     <?php
       foreach($userData as $user)
@@ -114,39 +118,60 @@
     ?>
 
     <form class="form-inline my-2 my-lg-0">
-    <a class="nav-link c" href="/userAccount"><?php echo $name; ?> <img src="/uploads/<?php echo $img; ?>"width="30px"height="30px" alt="Img" class="figure"> <span class="sr-only">(current)</span></a>
+    <a class="nav-link c" href="#"><?php echo $name; ?> <img src="/uploads/<?php echo $img; ?>"width="30px"height="30px" alt="Img" class="figure"> <span class="sr-only">(current)</span></a>
     </form>
   </div>
 </nav>
-
-<!-- ASIDE -->
-
-  <aside>
-      <h3 style="text-align:center">Categories</h3>
-      <hr>
-  </aside>
-
-<div class="main">
-  <?php
-    if(isset($itemsDB))
-    {
-      foreach ($itemsDB as $item)
+<div class="container">
+  <div class="mainContent">
+    <?php
+      if(isset($userData))
       {
-        ?>
-          <div class="card" id="card" value="<?php echo $item->itemId; ?>">
-          <img src="/uploads/items/<?php echo $item->itemImage; ?>"width="100%"height="200px" alt="<?php echo $item->itemImage; ?>">
-            <a href="/itemView?id=<?php echo $item->itemId; ?>"><?php echo $item->itemName; ?></a><br>
-            RS : <?php echo $item->itemPrice; ?>
-          </div>
-        <?php
-      }?>
-      <div class="clearBoth"></div>
-      <?php
-    }
-  ?>
+        foreach ($userData as $user) 
+        {
+          ?>
+            <div class="aside">
+              <img src="/uploads/<?php echo $user->userImage; ?>"width="250px"height="250px" alt="Img" class="figure">
+              <br><a class="btn btn-primary btn-sm chpr" href="#" role="button">Change Profile Image</a>
+            </div>
+          <?php
+          ?>
+            <div class="maindetails">
+              <p class="name"><?php echo $user->userFullname; ?></p> <?php
+              ?><p class="details"><?php echo $user->userContact; ?></p> <?php
+              ?><p class="details"><?php echo $user->placeName; ?></p> <?php
+              ?><p class="details"><?php echo $user->districtName; ?></p> <?php
+              ?><p class="details"><?php echo $user->stateName; ?></p> 
+            </div>
+            <div class="clearBoth"></div>
+            
+          <?php
+        }
+      }
+    ?>
+  </div>
+  <div class="menuGroup">
+    <i id="ico1" class="material-icons ico">shopping_cart</i><br>
+    <p id="icon1"></p>
+    <i id="ico2" class="material-icons ico">create</i><br>
+    <p id="icon2"></p>
+  </div>
+  <div class="clearBoth"></div>
 </div>
 
-<div class="clearBoth"></div>
-
+<script type="text/javascript">
+$( "#ico1" ).hover(
+  Msg1();
+);
+$( "#ico2" ).hover(
+  Msg2();
+);
+function Msg1(){
+  document.getElementById('icon1').innerHTML = '<strong>View Cart</strong>';
+}
+function Msg2(){
+  document.getElementById('icon2').innerHTML = '<strong>Edit Profile</strong>';
+}
+</script>
 </body>
 </html>

@@ -39,7 +39,16 @@ class userFunctions extends Controller
         $destination = base_path() . '/public/uploads';
         $request->file('UserImage')->move($destination, $userImage);
 
-        DB::table('tbl_users')->insert(['userFullname'=>$fullName,'userUsername'=>$userName,'userPassword'=>$password,'userContact'=>$contactNumber,'userPlace'=>$place,'userImage'=>$userImage]);
+        $checkLogin = DB::table('tbl_users')->where(['userUsername'=>$userName])->get();
+        if(count($checkLogin)  >0)
+        {
+            $msg="UserName already exists !";
+            return view('/userRegister',compact('msg'));
+        }
+        else
+        {
+            DB::table('tbl_users')->insert(['userFullname'=>$fullName,'userUsername'=>$userName,'userPassword'=>$password,'userContact'=>$contactNumber,'userPlace'=>$place,'userImage'=>$userImage]);
+        }
 
         return view('/userRegister');
     }
@@ -97,18 +106,16 @@ class userFunctions extends Controller
         return view('itemView', ['userData'=>$userData,'itemsDB'=>$itemsDB]);
     }
 
+    //RETURNS DATA TO USER ACCOUNT VIEW
     public function accountDataFetch(Request $request)
     {
         $itemid = $request->id;
 
         //TO GET USER DATA
         $uname =session()->get('loggedUserName');
-        $userData = DB::table('tbl_users')->where(['userUsername'=>$uname])->get();
+        $userData = DB::table('tbl_users')->join('tbl_place','tbl_place.placeId','=','tbl_users.userPlace')->join('tbl_district','tbl_district.districtId','=','tbl_place.districtId')->join('tbl_state','tbl_state.stateId','=','tbl_district.stateId')->where(['userUsername'=>$uname])->get();
 
-        //TO GET ITEM DATA
-        $itemsDB = DB::table('tbl_items')->join('tbl_subcategory','tbl_subcategory.subcatId','=','tbl_items.subcatId')->join('tbl_category','tbl_category.catId','=','tbl_subcategory.catId')->where('itemId','=',$itemid)->get();
-
-        return view('itemView', ['userData'=>$userData,'itemsDB'=>$itemsDB]);
+        return view('userAccount', ['userData'=>$userData,]);
     }
     
     public function userCheck(Request $request)

@@ -43,6 +43,7 @@ Route::get('/rejectShop', 'AdminFunctions@rejectShop');
 Route::get('/viewUsers', function () {
     return view('viewUsers');
 });
+Route::get('/viewUsers', 'AdminFunctions@usersData');
 
 Route::get('/adminLogout', 'Admin@adminLogout');
 
@@ -154,7 +155,7 @@ Route::get('/hover', function(){
 
 
 Route::get('/userAccount', function(){
-    return view('uesrAccount');
+    return view('userAccount');
 });
 Route::get('/userAccount', 'userFunctions@accountDataFetch');
 

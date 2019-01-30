@@ -258,4 +258,9 @@ class AdminFunctions extends Controller
         return redirect('/viewShops');
     }
 
+    public function usersData()
+    {
+        $usersDB = DB::table('tbl_users')->join('tbl_place','tbl_place.placeId','=','tbl_users.userPlace')->get();
+        return view('viewUsers',['usersDB'=>$usersDB]);
+    }
 }
