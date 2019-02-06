@@ -10,6 +10,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css?family=Baloo+Thambi" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato|Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kanit|Maven+Pro" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <script src = "/js/jquery.js"></script>
     <style>
     body {
@@ -43,6 +48,8 @@
       float:left;
     }
     .main{
+      background:url('/uploads/viewItembg.jpg')no-repeat;
+      background-size:100%;
       float:left;
       position:relative;
       margin:auto;
@@ -66,6 +73,49 @@
       z-index:11;
       border-radius:5px;
       box-shadow:0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    }
+    .fig{
+      border-radius:5px;
+      float:left;
+    }
+    .itemDetail{
+      float:left;
+    }
+    .itemName{
+      font-family: 'Kanit', sans-serif;
+    }
+    .p{
+      font-family: 'Maven Pro', sans-serif;
+    }
+    .commentChat{
+      width:100%;
+      height:250px;
+      margin:10px 0;
+    }
+    .comment{
+      width:50%;
+      height:250px;
+      /* background:#000; */
+      float:left;
+    }
+    .chat{
+      width:50%;
+      height:250px;
+      /* background:#fff; */
+      float:right;
+    }
+    .fa{
+      /* color:#FF9; */
+      color:#000;
+    }
+    .com{
+      border-radius:15px;
+    }
+    .addComment{
+      width:55px;
+      padding:5px;
+      float:right;
+      margin:10px;
     }
     .my{
 		color:#CCD700;
@@ -93,10 +143,10 @@
           Menu
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/userLogout">Logout</a>
+          <a class="dropdown-item" href="#">Action</a>
           <a class="dropdown-item" href="#">Another action</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/#">Another action 2</a>
+          <a class="dropdown-item" href="#">Something else here</a>
         </div>
       </li>
     </ul>
@@ -114,7 +164,7 @@
     ?>
 
     <form class="form-inline my-2 my-lg-0">
-    <a class="nav-link c" href="/userAccount"><?php echo $name; ?> <img src="/uploads/<?php echo $img; ?>"width="30px"height="30px" alt="Img" class="figure"> <span class="sr-only">(current)</span></a>
+    <a class="nav-link c" href="#"><?php echo $name; ?> <img src="/uploads/<?php echo $img; ?>"width="30px"height="30px" alt="Img" class="figure"> <span class="sr-only">(current)</span></a>
     </form>
   </div>
 </nav>
@@ -127,27 +177,56 @@
   </aside>
 
 <div class="main">
-  <?php
-    if(isset($itemsDB))
-    {
-      foreach ($itemsDB as $item)
-      {
-        ?>
-          <div class="card" id="card" value="<?php echo $item->itemId; ?>">
-          <img src="/uploads/items/<?php echo $item->itemImage; ?>"width="100%"height="200px" alt="<?php echo $item->itemImage; ?>">
-            <a href="/itemView?id=<?php echo $item->itemId; ?>"><?php echo $item->itemName; ?></a><br>
-            RS : <?php echo $item->itemPrice; ?>
-            
-          </div>
-        <?php
-      }?>
-      <div class="clearBoth"></div>
-      <?php
-    }
-  ?>
+<?php
+  if(isset($itemsDB)){
+    foreach ($itemsDB as $item) {   
+?>
+  <div>
+    <img src="/uploads/items/<?php echo $item->itemImage; ?>"width="350px"height="250px" alt="Img" class="fig">
+    <div class="itemDetail">
+      <h2 class="itemName"><?php echo $item->itemName; ?></h2><br>
+      <span id="target" class="fa fa-star a" ></span>
+      <span  class="fa fa-star a" ></span>
+      <span  class="fa fa-star a" ></span>
+      <span  class="fa fa-star a" ></span>
+      <span  class="fa fa-star a" ></span>
+      <p>RS : <?php echo $item->itemPrice; ?></p>
+      <p><?php echo $item->itemDetails; ?></p>
+      <p><?php echo $item->catName; ?>><?php echo $item->subcatName; ?></p>
+    </div>
+    <div class="clearBoth"></div>
+    
+  </div>
+
+
+  <div class="commentChat">
+    <form action="/comment?itemId=<?php echo $item->itemId; ?>" method="post">
+    <input type="hidden" name="_token" value="<?php echo csrf_token();?>">
+      <div class="comment">
+        <textarea name="commentBox" rows="5" cols="60" placeholder="Comment" class="com"></textarea>
+        <input type="submit" value="Add" class="btn btn-info addComment"></button>
+      </div>
+    </form>
+    <div class="chat"></div>
+    <div class="clearBoth"></div>
+  </div>
 </div>
 
+<?php
+    }
+  }
+?>
+
 <div class="clearBoth"></div>
+
+<script type="text/javascript">
+  function rateInsert(itemid,rateno)
+	{
+		$( "#target" ).click(function() {
+  alert( "Handler for .click() called. ");
+});
+	}
+</script>
 
 </body>
 </html>

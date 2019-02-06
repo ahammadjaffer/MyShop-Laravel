@@ -38,6 +38,11 @@
             <input type="hidden" name="_token" value="<?php echo csrf_token();?>">
                 <h2 class="heading">Register</h2>
                 <input type="text" class="form-control" name="txtFullName" id="txtFullName" placeholder="Full Name" autofocus="autofocus"/><br>
+                <?php if(isset($msg)){?>
+                <div class="alert alert-danger" role="alert">
+                    <?php echo $msg; ?>
+                </div>
+                <?php } ?><br>
                 <input type="text" class="form-control" name="txtUserName" id="txtUserName" placeholder="UserName"/><br>
                 <input type="text" class="form-control" name="txtPassword" id="txtPassword" placeholder="Password"/><br>
                 <input type="text" class="form-control" name="txtConfirmPassword" id="txtConfirmPassword" placeholder="Confirm Password"/><br>

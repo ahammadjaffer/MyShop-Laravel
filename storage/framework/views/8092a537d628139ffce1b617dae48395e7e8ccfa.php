@@ -117,13 +117,18 @@
       float:right;
       margin:10px;
     }
-
+    .my{
+		color:#CCD700;
+    }
+    .shop{
+      color:#0099A5;
+    }
     </style>
 </head>
 
 <body>
 <nav class="navbar navbar-expand-lg ">
-  <a class="navbar-brand c" href="/userHome">MyShop</a>
+  <a class="navbar-brand c" href="/userHome"><span class="my">My</span><span class="shop">Shop</span></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon">Menu</span>
   </button>
@@ -146,7 +151,7 @@
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search Items" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     
@@ -188,26 +193,33 @@
       <p>RS : <?php echo $item->itemPrice; ?></p>
       <p><?php echo $item->itemDetails; ?></p>
       <p><?php echo $item->catName; ?>><?php echo $item->subcatName; ?></p>
+      <form action="/addToCart?itemId=<?php echo $item->itemId; ?>" method="post">
+      <input type="hidden" name="_token" value="<?php echo csrf_token();?>">
+        <input type="number" name="orderCount" id="orderCount"><input type="submit" value="Add to cart">
+      </form>
     </div>
     <div class="clearBoth"></div>
     
   </div>
+
+
+  <div class="commentChat">
+    <form action="/comment?itemId=<?php echo $item->itemId; ?>" method="post">
+    <input type="hidden" name="_token" value="<?php echo csrf_token();?>">
+      <div class="comment">
+        <textarea name="commentBox" rows="5" cols="60" placeholder="Comment" class="com"></textarea>
+        <input type="submit" value="Add" class="btn btn-info addComment"></button>
+      </div>
+    </form>
+    <div class="chat"></div>
+    <div class="clearBoth"></div>
+  </div>
+</div>
+
 <?php
     }
   }
 ?>
-
-<div class="commentChat">
-  <form action="/comment" method="post">
-    <div class="comment">
-      <textarea rows="5" cols="60" placeholder="Comment" class="com"></textarea>
-      <button type="button" class="btn btn-info addComment">Add</button>
-    </div>
-  </form>
-  <div class="chat"></div>
-  <div class="clearBoth"></div>
-</div>
-</div>
 
 <div class="clearBoth"></div>
 

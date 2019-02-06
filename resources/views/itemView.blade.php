@@ -193,26 +193,33 @@
       <p>RS : <?php echo $item->itemPrice; ?></p>
       <p><?php echo $item->itemDetails; ?></p>
       <p><?php echo $item->catName; ?>><?php echo $item->subcatName; ?></p>
+      <form action="/addToCart?itemId=<?php echo $item->itemId; ?>" method="post">
+      <input type="hidden" name="_token" value="<?php echo csrf_token();?>">
+        <input type="number" name="orderCount" id="orderCount"><input type="submit" value="Add to cart">
+      </form>
     </div>
     <div class="clearBoth"></div>
     
   </div>
+
+
+  <div class="commentChat">
+    <form action="/comment?itemId=<?php echo $item->itemId; ?>" method="post">
+    <input type="hidden" name="_token" value="<?php echo csrf_token();?>">
+      <div class="comment">
+        <textarea name="commentBox" rows="5" cols="60" placeholder="Comment" class="com"></textarea>
+        <input type="submit" value="Add" class="btn btn-info addComment"></button>
+      </div>
+    </form>
+    <div class="chat"></div>
+    <div class="clearBoth"></div>
+  </div>
+</div>
+
 <?php
     }
   }
 ?>
-
-<div class="commentChat">
-  <form action="/comment" method="post">
-    <div class="comment">
-      <textarea rows="5" cols="60" placeholder="Comment" class="com"></textarea>
-      <button type="button" class="btn btn-info addComment">Add</button>
-    </div>
-  </form>
-  <div class="chat"></div>
-  <div class="clearBoth"></div>
-</div>
-</div>
 
 <div class="clearBoth"></div>
 

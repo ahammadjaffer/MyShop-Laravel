@@ -165,3 +165,15 @@ Route::get('/userForgetPass', function(){
 });
 Route::post('/CheckUserExists', 'userFunctions@userCheck');
 Route::post('/changeUserPassword', 'userFunctions@changeUserPassword');
+//USERCART
+Route::get('/userCart', function(){
+    return view('user/userCart');
+});
+//USEREDITPROFILE
+Route::get('/userEditProfile', function(){
+    return view('user/userEditProfile');
+});
+//ADD COMMENT
+Route::post('/comment', 'userFunctions@comment');
+//ADD TO CART
+Route::post('/addToCart', 'userFunctions@addtoCart');
