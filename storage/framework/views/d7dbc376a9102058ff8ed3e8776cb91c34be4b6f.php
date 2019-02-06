@@ -67,13 +67,18 @@
       border-radius:5px;
       box-shadow:0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     }
-    
+    .my{
+		color:#CCD700;
+    }
+    .shop{
+      color:#0099A5;
+    }
     </style>
 </head>
 
 <body>
 <nav class="navbar navbar-expand-lg ">
-  <a class="navbar-brand c" href="/userHome">MyShop</a>
+  <a class="navbar-brand c" href="/userHome"><span class="my">My</span><span class="shop">Shop</span></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon">Menu</span>
   </button>
@@ -96,7 +101,7 @@
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search Items" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     
@@ -132,6 +137,7 @@
           <img src="/uploads/items/<?php echo $item->itemImage; ?>"width="100%"height="200px" alt="<?php echo $item->itemImage; ?>">
             <a href="/itemView?id=<?php echo $item->itemId; ?>"><?php echo $item->itemName; ?></a><br>
             RS : <?php echo $item->itemPrice; ?>
+            
           </div>
         <?php
       }?>
