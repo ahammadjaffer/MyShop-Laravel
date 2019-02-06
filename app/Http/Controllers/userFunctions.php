@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\comments;
 
 class userFunctions extends Controller
 {
@@ -62,6 +63,13 @@ class userFunctions extends Controller
         $checkLogin = DB::table('tbl_users')->where(['userUsername'=>$username,'userPassword'=>$password])->get();
         if(count($checkLogin)  >0)
         {
+            foreach($checkLogin as $user)
+            {
+                $uId = $user->userId;
+            }
+
+            $request->session()->put('loggedUserId',$uId);
+
             $request->session()->put('loggedUserName',$username);
             return redirect('/userHome');
         }
@@ -141,5 +149,31 @@ class userFunctions extends Controller
         $password = $request->p1;
         DB::table('tbl_users')->where(['userUsername'=>$uname])->update(['userPassword'=>$password]);
         return redirect('/userHome');
+    }
+
+    public function comment(Request $request)
+    {
+        $uId = session()->get('loggedUserId');
+        $commentText = $request->commentBox;
+        $itemId = $request->itemId;
+        DB::table('tbl_comments')->insert(['itemId'=>$itemId,'userId'=>$uId,'comment'=>$commentText]);
+        return redirect('/itemView');
+    }
+
+    public function addtoCart(Request $request)
+
+    
+    {
+        $itemid = $request->itemId;
+        $userid = session()->get('loggedUserId');
+        $itemCount = $request->orderCount;
+
+        $itemsDB = DB::table('tbl_items')->where('itemId', $itemid)->pluck('itemPrice');
+        $total = $itemCount * getInt($itemsDB);
+        
+
+        // DB::table('tbl_cart')->insert(['userId'=>$userid,'itemId'=>$itemid,'itemQuantity'=>$itemCount]);
+        
+        return view('/user/userCart',['data'=>$itemsDB,'itemCount'=>$itemCount,'itemTotal'=>$total]);
     }
 }
